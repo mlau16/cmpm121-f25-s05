@@ -1,40 +1,17 @@
-# Section 5 – Refactoring Code Smells in Practice
+CMPM 121 - Smelly Code Refactoring Activity (S05)
 
-This activity is designed to help you practice identifying code smells and applying refactoring patterns to a real codebase in CMPM 121, Game Development Patterns.
+Code Smells:
 
-## Assignment Instructions
+- Duplicated Code: Repeated update logic for all three buttons
+- Magic Strings: Hardcoded button IDs and colors were scattered in the file
+- Long Method: The setup() function was handling a lot of the code
+- Unclear Names: There was variables named a, b and c, which weren't descriptive of what they were
+- Global State: The counter was managed through a global variable
 
-For this assignment, your task is to **analyze and improve the code in `src/main.ts`**:
+Refactoring Methods:
 
-1. **Identify code smells**: Review the code and look for patterns that may cause maintenance issues, reduce readability, or introduce potential bugs.
-2. **Refactor**: Apply **refactoring patterns** as described in Fowler’s _Refactoring_ book to improve the code.
-3. **Document your work**: Once you have completed your refactoring:
-   - Rewrite this README.md
-   - List the **code smells** you identified
-   - Describe the **refactoring patterns** you applied and how they improved the code
-
-## Getting Started
-
-With Codespaces (or another environment supporting devcontainers):
-
-1. Run `deno task dev` to start the development server
-
-Without Codespaces (local VS Code):
-
-1. Install the [Deno](https://docs.deno.com/runtime/getting_started/installation/) runtime.
-2. Install the Deno VS Code extension (must be done only after installing Deno runtime).
-3. Run `./setup-hooks.sh` to enable pre-commit quality checks
-4. Run `deno task dev` to start the development server
-
-The setup script configures Git hooks to automatically run formatting, linting, and type checking before commits.
-
-## Deployment
-
-This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
-
-### Setup GitHub Pages Deployment
-
-1. Go to your repository's Settings → Pages
-2. Under "Source", select "GitHub Actions"
-3. The workflow will automatically deploy on pushes to the `main` branch
-4. Your site will be published at `https://<your-github-username>.github.io/<repository-name>/`
+- Extract Method: Created a updateUI() method to use in multiple areas that needed DOM updates
+- Rename Variable: Renamed the variables to be more descriptive and clear
+- Introduce Constant: Replaced the magic strings with named constants
+- Extract Function: split setup() into smaller functions with a main focus
+- Encapsulate Variable: Wrapped the counter in a state object

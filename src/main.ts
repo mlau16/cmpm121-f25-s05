@@ -1,73 +1,66 @@
-// CMPM 121 Smelly Code Activity
+// ===== CMPM 121 Refactored Counter =====
 
-// This variable keeps track of the counter
-let c = 0;
+// ===== CONSTANTS ======
+const IDS = {
+  increment: "increment",
+  decrement: "decrement",
+  reset: "reset",
+  counter: "counter",
+};
 
-// These constants are for button IDs and heading text
-const a = "increment", b = "counter", h = "CMPM 121 Project";
+const COLORS = {
+  even: "lightblue",
+  odd: "pink",
+};
 
-function setup() {
-  // Create the HTML for the counter
+const TITLE = "CMPM 121 Project";
+
+// ===== COUNTER STATE =====
+const state = { count: 0 };
+
+// ===== UI SETUP =====
+function setupUI() {
   document.body.innerHTML = `
-    <h1>${h}</h1>
-    <p>Counter: <span id="${b}">0</span></p>
-    <button id="${a}">Click Me!</button>
-    <button id="dec">Decrement</button>
-    <button id="reset">Reset</button>
+    <h1>${TITLE}</h1>
+    <p>Counter: <span id="${IDS.counter}">0</span></p>
+    <button id="${IDS.increment}">Click Me!</button>
+    <button id="${IDS.decrement}">Decrement</button>
+    <button id="${IDS.reset}">Reset</button>
   `;
+}
 
-  // Get the increment button element from the document
-  const bI = document.getElementById(a);
-  // Get the decrement button element from the document
-  const bD = document.getElementById("dec");
-  // Get the reset button element from the document
-  const bR = document.getElementById("reset");
-  // Get the counter span element from the document
-  const ctr = document.getElementById(b);
+function updateUI() {
+  const counterElement = document.getElementById(IDS.counter);
+  if (!counterElement) return;
+  counterElement.textContent = String(state.count);
+  document.title = `Clicked ${state.count}`;
+  document.body.style.backgroundColor = state.count % 2 === 0
+    ? COLORS.even
+    : COLORS.odd;
+}
 
-  // Check if any element is missing, then exit the function
-  if (!bI || !bD || !bR || !ctr) return;
-
-  // Add click event to the increment button
-  bI.addEventListener("click", () => {
-    // Increase the counter by 1
-    c++;
-    // Update the counter display
-    ctr.innerHTML = `${c}`;
-    // Update the document title
-    document.title = "Clicked " + c;
-    // Change the background color based on even/odd count
-    document.body.style.backgroundColor = c % 2 ? "pink" : "lightblue";
+// ===== EVENT HANDLERS =====
+function addEventListeners(): void {
+  document.getElementById(IDS.increment)?.addEventListener("click", () => {
+    state.count++;
+    updateUI();
   });
 
-  // Add click event to the decrement button
-  bD.addEventListener("click", () => {
-    // Decrease the counter by 1
-    c--;
-    // Update the counter display
-    ctr.innerHTML = `${c}`;
-    // Update the document title
-    document.title = "Clicked " + c;
-    // Change the background color based on even/odd count
-    document.body.style.backgroundColor = c % 2 ? "pink" : "lightblue";
+  document.getElementById(IDS.decrement)?.addEventListener("click", () => {
+    state.count--;
+    updateUI();
   });
 
-  // Add click event to the reset button
-  bR.addEventListener("click", () => {
-    // Reset the counter to 0
-    c = 0;
-    // Update the counter display
-    ctr.innerHTML = `${c}`;
-    // Update the document title
-    document.title = "Clicked " + c;
-    // Change the background color based on even/odd count
-    document.body.style.backgroundColor = c % 2 ? "pink" : "lightblue";
+  document.getElementById(IDS.reset)?.addEventListener("click", () => {
+    state.count = 0;
+    updateUI();
   });
 }
 
-function start() {
-  // Call setup to initialize the UI
-  setup();
+// ===== START APP =====
+function start(): void {
+  setupUI();
+  addEventListeners();
+  updateUI();
 }
-// Start the counter app
 start();
